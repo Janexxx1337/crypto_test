@@ -1,0 +1,49 @@
+@font-face {
+  font-family: icomoon; /* имя, которое вы будете использовать для обращения к шрифту в CSS */
+  src: url('@/assets/icomoon/icomoon.ttf') format('truetype'); /* путь к файлу шрифта */
+  font-weight: normal;
+  font-style: normal;
+  font-display: block; /* Опционально: управляет отображением шрифта во время загрузки */
+}
+
+.icon {
+  position: relative;
+  color: inherit;
+  /* stylelint-disable font-family-no-missing-generic-family-keyword */
+  font-family: icomoon !important;
+  /* stylelint-enable  font-family-no-missing-generic-family-keyword */
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+.icon-check::before {
+  content: "\e900";
+}
+
+.icon-comments::before {
+  content: "\e901";
+}
+
+.icon-cross-x::before {
+  content: "\e902";
+}
+
+.icon-down::before {
+  content: "\e903";
+}
+
+.icon-plus::before {
+  content: "\e904";
+}
+
+.icon-search::before {
+  content: "\e905";
+}
+
+.icon-time::before {
+  content: "\e906";
+}
