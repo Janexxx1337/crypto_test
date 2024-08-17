@@ -4,7 +4,7 @@
       <div class="wrapper flex flex-col px-2.5 sm:px-8">
         <div class="title-bar flex w-full justify-between flex-wrap py-3 sm:py-5 sm:justify-start sm:flex-nowrap gap-x-10 gap-y-2.5">
           <h2 class="title font-bold order-1">Блог</h2>
-          <UiSearch class="order-3 max-w-full sm:order-2 sm:max-w-25rem" />
+          <UiSearch class="order-3 max-w-full sm:order-2 sm:max-w-25rem" v-model="searchValue"/>
           <div class="switch-filter flex gap-2.5 items-center cursor-pointer ml-auto order-2 sm:order-3" @click="toggleShowTagsOrClear">
             <div>
               <div class="clear" v-show="hasActiveTag && showTags">Очистить</div>
@@ -18,9 +18,10 @@
     </div>
     <div class="blog__content w-full">
       <div class="content-wrapper px-2.5 w-full flex justify-center">
-        <div class="content-main rounded-xl bg-white w-full grid grid-cols-blog gap-x-5 gap-y-10">
-          <BlogItem v-for="(blog, index) in blogs" :key="index" :blog="blog" />
+        <div class="content-main rounded-xl bg-white w-full grid grid-cols-blog gap-x-5 gap-y-10 p-4 lg:p-8" v-if="filteredBlogs.length">
+          <BlogItem v-for="(blog, index) in filteredBlogs" :key="index" :blog="blog" />
         </div>
+        <SearchEmptyPlaceholder class="rounded-xl bg-white py-16 px-8" v-else/>
       </div>
     </div>
   </div>
@@ -31,9 +32,10 @@ import { ref, computed } from 'vue';
 import UiSearch from '@/components/Base/Input/UiSearch.vue';
 import UiListTags from '@/components/Base/UiListTags.vue';
 import BlogItem from '@/components/Base/BlogItem.vue';
-import { useBlogStore } from '@/stores/blogStore'
+import SearchEmptyPlaceholder from '@/components/Base/SearchEmptyPlaceholder.vue';
+import { useBlogStore } from '@/stores/blogStore';
 
-const { blogs } = useBlogStore()
+const { blogs } = useBlogStore();
 
 const tags = ref([
   { name: 'Город', key: 'city', check: false },
@@ -47,6 +49,7 @@ const tags = ref([
 ]);
 
 const showTags = ref(false);
+const searchValue = ref('');
 
 const hasActiveTag = computed(() => {
   return tags.value.some(tag => tag.check);
@@ -65,7 +68,46 @@ const checkTag = (tagKey) => {
   if (tag) {
     tag.check = !tag.check;
   }
-}
+};
+
+// Вычисляемое свойство для фильтрации по тегам
+const filteredByTags = computed(() => {
+  if (!blogs.length) return []; // Проверка на наличие данных
+  if (!hasActiveTag.value) {
+    console.log("No active tags, returning all blogs");
+    return blogs;
+  }
+
+  // Получаем ключи всех активных тегов
+  const activeTagKeys = tags.value
+    .filter(tag => tag.check)
+    .map(tag => tag.key);
+
+  // Фильтрация блогов по всем выбранным тегам
+  const filtered = blogs.filter(blog => {
+    // Проверяем, что каждый активный тег присутствует в тегах блога
+    return activeTagKeys.every(tagKey => blog.tags.some(blogTag => blogTag.key === tagKey));
+  });
+
+  console.log("Filtered by tags:", filtered);
+  return filtered;
+});
+
+
+const filteredBlogs = computed(() => {
+  if (!filteredByTags.value.length) return [];
+  if (!searchValue.value) {
+    return filteredByTags.value;
+  }
+
+  const filtered = filteredByTags.value.filter(blog => 
+    blog.title.toLowerCase().includes(searchValue.value.toLowerCase())
+  );
+
+  console.log("Filtered by search:", filtered);
+  return filtered;
+});
+
 </script>
 
 <style lang="scss" scoped>
@@ -94,7 +136,6 @@ const checkTag = (tagKey) => {
     .content-wrapper {
       .content-main {
         max-width: 81.25rem;
-        padding: 1.875rem;
       }
     }
   }
@@ -103,17 +144,5 @@ const checkTag = (tagKey) => {
 .wrapper {
   width: 100%;
   max-width: 79.675rem;
-}
-
-@media (max-width: 1024px) {
-  .blog {
-    &__content {
-      .content-wrapper {
-        .content-main {
-          padding: 0.9375rem;
-        }
-      }
-    }
-  }
 }
 </style>
