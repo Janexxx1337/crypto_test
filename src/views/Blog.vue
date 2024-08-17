@@ -19,10 +19,11 @@
     <div class="blog__content w-full">
       <div class="content-wrapper px-2.5 w-full flex justify-center">
         <div class="content-main rounded-xl bg-white w-full grid grid-cols-blog gap-x-5 gap-y-10 p-4 lg:p-8" v-if="filteredBlogs.length">
-          <BlogItem v-for="(blog, index) in filteredBlogs" :key="index" :blog="blog" />
+          <BlogItem v-for="(blog, index) in filteredBlogs" :key="index" :blog="blog" @open-blog="openBlogModal" />
         </div>
         <SearchEmptyPlaceholder class="rounded-xl bg-white py-16 px-8" v-else/>
       </div>
+      <BlogItemModal :blog="activeBlog" v-if="showBlogModal" @close="closeBlogModal"/>
     </div>
   </div>
 </template>
@@ -33,6 +34,7 @@ import UiSearch from '@/components/Base/Input/UiSearch.vue';
 import UiListTags from '@/components/Base/UiListTags.vue';
 import BlogItem from '@/components/Base/BlogItem.vue';
 import SearchEmptyPlaceholder from '@/components/Base/SearchEmptyPlaceholder.vue';
+import BlogItemModal from '@/components/Base/BlogItemModal.vue';
 import { useBlogStore } from '@/stores/blogStore';
 
 const { blogs } = useBlogStore();
@@ -50,6 +52,8 @@ const tags = ref([
 
 const showTags = ref(false);
 const searchValue = ref('');
+const showBlogModal = ref(false);
+const activeBlog = ref(null)
 
 const hasActiveTag = computed(() => {
   return tags.value.some(tag => tag.check);
@@ -70,6 +74,15 @@ const checkTag = (tagKey) => {
   }
 };
 
+const openBlogModal = (blog) => {
+  activeBlog.value = blog;
+  showBlogModal.value = true;
+}
+
+const closeBlogModal = () => {
+  activeBlog.value = null;
+  showBlogModal.value = false;
+}
 // Вычисляемое свойство для фильтрации по тегам
 const filteredByTags = computed(() => {
   if (!blogs.length) return []; // Проверка на наличие данных

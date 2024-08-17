@@ -1,6 +1,6 @@
 <template>
   <div class="blog-item flex flex-col gap-2.5">
-    <img :src="`src/assets/img/blog-items/${blog.img}.png`" alt="">
+    <img :src="`src/assets/img/blog-items/${blog.img}.png`" alt="" class="cursor-pointer" @click="$emit('openBlog', blog)">
     <BlogItemStat :created-at="blog.createdAt" :comments="blog.comments" />
     <h3 class="title text-xl/5">{{ blog.title }}</h3>
     <h5 class="description text-base/4">{{ blog.description }}</h5>
@@ -14,7 +14,6 @@ import UiListTags from '@/components/Base/UiListTags.vue';
 import BlogItemStat from '@/components/Base/BlogItemStat.vue';
 
 const props = defineProps({
-  index: { type: Number },
   blog: { type: Object }
 });
 </script>
