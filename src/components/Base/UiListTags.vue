@@ -15,8 +15,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-
 const props = defineProps({
   tags: { type: Array, default: []},
   tagClass: { type: String }

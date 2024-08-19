@@ -89,7 +89,7 @@ const submitComment = () => {
     &.error {
       &.focus {
         border: 1px solid rgb(241, 65, 108);
-        box-shadow: 0px 0px 0px 2px rgba(241, 65, 108, 0.32);
+        box-shadow: 0 0 0 2px rgba(241, 65, 108, 0.32);
       }
     }
 
@@ -102,7 +102,7 @@ const submitComment = () => {
       outline: none;
       height: 8.25rem;
       border: 1px solid rgb(225, 227, 234);
-      box-shadow: 0px 0px 0px 2px rgba(62, 151, 255, 0.32);
+      box-shadow: 0 0 0 2px rgba(62, 151, 255, 0.32);
     }
   }
 
