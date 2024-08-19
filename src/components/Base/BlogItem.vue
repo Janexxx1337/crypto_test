@@ -9,7 +9,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import UiListTags from '@/components/Base/UiListTags.vue';
 import BlogItemStat from '@/components/Base/BlogItemStat.vue';
 
