@@ -11,13 +11,13 @@ export const useBlogStore = defineStore('counter', {
             userName: 'User123',
             userId: 1,
             message: 'Это вдохновляет меня на новые путешествия!',
-            date: '2023-08-01T08:30:00'
+            date: '01.08.2023 в 08:30'
           },
           {
             userName: 'NatureLover',
             userId: 6,
             message: 'Природа действительно потрясает!',
-            date: '2023-08-02T10:45:00'
+            date: '01.08.2023 в 08:30'
           }
         ],
         title: 'Вдохновение в каждом шаге',
@@ -36,13 +36,13 @@ export const useBlogStore = defineStore('counter', {
             userName: 'CoolGuy',
             userId: 2,
             message: 'Тишина и покой — это то, что нужно для перезагрузки.',
-            date: '2023-08-03T09:20:00'
+            date: '01.08.2023 в 08:30'
           },
           {
             userName: 'ArtFan',
             userId: 5,
             message: 'Согласен, очень умиротворяющие фотографии.',
-            date: '2023-08-04T14:15:00'
+            date: '01.08.2023 в 08:30'
           }
         ],
         title: 'Моменты тишины и покоя',
@@ -61,13 +61,13 @@ export const useBlogStore = defineStore('counter', {
             userName: 'Traveler',
             userId: 3,
             message: 'Цвета природы такие яркие и вдохновляющие!',
-            date: '2023-08-05T16:00:00'
+            date: '01.08.2023 в 08:30'
           },
           {
             userName: 'MountainKing',
             userId: 4,
             message: 'Это прекрасно отражает всю красоту мира.',
-            date: '2023-08-06T11:30:00'
+            date: '01.08.2023 в 08:30'
           }
         ],
         title: 'Цвета природы в наших руках',
@@ -86,13 +86,13 @@ export const useBlogStore = defineStore('counter', {
             userName: 'Photographer',
             userId: 4,
             message: 'Семейные узы — это самое важное в жизни.',
-            date: '2023-08-07T08:45:00'
+            date: '01.08.2023 в 08:30'
           },
           {
             userName: 'NatureLover',
             userId: 3,
             message: 'Такие моменты очень трогательные.',
-            date: '2023-08-08T13:10:00'
+            date: '01.08.2023 в 08:30'
           }
         ],
         title: 'Семейные узы в дикой природе',
@@ -111,13 +111,13 @@ export const useBlogStore = defineStore('counter', {
             userName: 'ArtFan',
             userId: 5,
             message: 'Гармония между природой и городом — это искусство!',
-            date: '2023-08-09T12:30:00'
+            date: '01-08-2023 в 08:30'
           },
           {
             userName: 'CoolGuy',
             userId: 2,
             message: 'Отличное сочетание городских и природных элементов.',
-            date: '2023-08-10T17:45:00'
+            date: '01.08.2023 в 08:30'
           }
         ],
         title: 'Гармония городских и природных пейзажей',
@@ -136,13 +136,13 @@ export const useBlogStore = defineStore('counter', {
             userName: 'User123',
             userId: 6,
             message: 'Эти моменты остаются в памяти навсегда.',
-            date: '2023-08-11T09:10:00'
+            date: '01-08-2023 в 08:30'
           },
           {
             userName: 'Traveler',
             userId: 1,
             message: 'Это одна из тех вещей, которые наполняют сердце радостью.',
-            date: '2023-08-12T10:20:00'
+            date: '01.08.2023 в 08:30'
           }
         ],
         title: 'Моменты, которые остаются в сердце',

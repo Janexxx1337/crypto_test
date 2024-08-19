@@ -10,9 +10,9 @@
           <p class="text text-base/[25px] font-medium">{{ blog.text }}</p>
         </div>
         <UiListTags class="gap-2.5 mb-1.5" :tags="blog.tags" :tag-class="'text-sm'"/>
-        <div class="comments flex flex-col gap-2.5">  
+        <div class="comments flex flex-col gap-2.5">
           <h4 class="comments-title text-base font-semibold">Комментариев {{ blog.comments.length }}</h4>
-          <CommentInput />
+          <CommentInput @submit-comment="addComment"/>
           <div class="comments-list p-3 flex flex-col gap-3">
             <CommentItem v-for="(comment, index) in blog.comments" :key="index" :comment="comment"/>
           </div>
@@ -23,7 +23,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import UiListTags from '@/components/Base/UiListTags.vue';
 import BlogItemStat from '@/components/Base/BlogItemStat.vue';
 import CommentItem from '@/components/Base/CommentItem.vue';
@@ -32,6 +31,11 @@ import CommentInput from '@/components/Base/CommentInput.vue';
 const props = defineProps({
   blog: { type: Object }
 });
+
+// Метод для добавления нового комментария
+const addComment = (newComment) => {
+  props.blog.comments.push(newComment);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -47,7 +51,7 @@ const props = defineProps({
     scrollbar-width: none; /* Для Firefox */
     -ms-overflow-style: none;
     ::-webkit-scrollbar {
-      width: 0px;  /* Скрываем скроллбар в Webkit браузерах (Chrome, Safari) */
+      width: 0;  /* Скрываем скроллбар в Webkit браузерах (Chrome, Safari) */
       background: transparent;  /* Делаем фон скроллбара прозрачным */
     }
   }

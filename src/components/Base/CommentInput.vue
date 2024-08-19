@@ -2,40 +2,76 @@
   <div class="comment-input flex flex-col gap-2.5 w-full">
     <div class="group flex flex-col gap-1.5">
       <textarea
-        v-model="commentText"
-        class="comment-textarea text-sm font-medium rounded-md text-sm w-full"
-        :class="[{'error': commentText.length > 250}, {'focus': openInput}]"
-        placeholder="Введите комментарий"
-        @focus="expandTextarea"
-        @blur="reduceTextarea"
+          v-model="commentText"
+          class="comment-textarea text-sm font-medium rounded-md text-sm w-full"
+          :class="[{'error': commentText.length > 250}, {'focus': openInput}]"
+          placeholder="Введите комментарий"
+          @focus="expandTextarea"
+          @blur="reduceTextarea"
       ></textarea>
-      <span class="text-xs font-medium" v-show="openInput">{{ commentText.length }} из 250 символов</span>
+      <span class="text-xs font-medium" v-show="openInput">
+        <span :class="{'text-error': commentText.length > 250}">{{ commentText.length }}</span> из 250 символов
+      </span>
     </div>
     <div class="group-btns flex gap-2.5 justify-end" v-show="openInput">
       <button class="btn-close py-3 px-4 rounded-md font-bold" @click="clearTextarea">Отмена</button>
-      <button class="btn-enter py-3 px-4 rounded-md font-bold">Опубликовать</button>
+      <button class="btn-enter py-3 px-4 rounded-md font-bold" @click="submitComment">Опубликовать</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-
+import { ref } from 'vue';
 
 const commentText = ref('');
 const openInput = ref(false);
+
+const emit = defineEmits(['submit-comment']);
 
 const expandTextarea = () => {
   openInput.value = true;
 };
 
 const reduceTextarea = () => {
-  if (commentText.value !== '') return 
+  if (commentText.value !== '') return
   openInput.value = false;
 }
 
 const clearTextarea = () => {
   commentText.value = ''
+}
+
+const formatDate = (date) => {
+  const options = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+  const formattedDate = date.toLocaleString('ru-RU', options);
+  const [datePart, timePart] = formattedDate.split(', ');
+  const [day, month, year] = datePart.split('.');
+
+  return `${day}-${month}-${year} в ${timePart}`;
+};
+
+const submitComment = () => {
+  if (commentText.value.trim().length === 0 || commentText.value.length > 250) {
+    return; // Не публиковать, если комментарий пустой или превышает лимит
+  }
+
+  const newComment = {
+    userId: Math.floor(Math.random() * 5) + 1, // Случайный ID пользователя
+    userName: 'Гость',
+    message: commentText.value,
+    date: formatDate(new Date())
+  };
+
+  emit('submit-comment', newComment);
+
+  clearTextarea();
+  reduceTextarea();
 }
 </script>
 
@@ -70,9 +106,8 @@ const clearTextarea = () => {
     }
   }
 
-  span {
-    color: #7E8299;
-    font-variant-numeric: lining-nums tabular-nums;
+  .text-error {
+    color: rgb(241, 65, 108);
   }
 
   .group-btns {
